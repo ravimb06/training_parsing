@@ -1,5 +1,6 @@
 import requests_cache
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
 WHATS_NEW_URL = 'https://docs.python.org/3/whatsnew/'
 
@@ -13,4 +14,6 @@ if __name__ == '__main__':
     section_by_python = div_with_ul.find_all('li', attrs={'class': 'toctree-l1'})
     for section in section_by_python:
         version_a_tag = section.find('a')
-        print(version_a_tag)
+        href = version_a_tag['href']
+        version_link = urljoin(WHATS_NEW_URL, href)
+        print(version_link)
