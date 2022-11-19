@@ -14,6 +14,7 @@ if __name__ == '__main__':
     div_with_ul = main_div.find('div', attrs={'class': 'toctree-wrapper'})
     sections_by_python = div_with_ul.find_all(
                          'li', attrs={'class': 'toctree-l1'})
+    results = []
     for section in tqdm(sections_by_python):
         version_a_tag = section.find('a')
         href = version_a_tag['href']
@@ -24,4 +25,8 @@ if __name__ == '__main__':
         h1 = soup.find('h1')
         dl = soup.find('dl')
         dl_text = dl.text.replace('\n', ' ')
-        print(version_link, h1.text, dl_text)
+        results.append(
+            (version_link, h1.text, dl_text)
+        )
+    for row in results:
+        print(*row)
