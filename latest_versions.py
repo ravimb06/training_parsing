@@ -21,19 +21,15 @@ if __name__ == '__main__':
     pattern_r = r'Python (?P<version>\d\.\d+) \((?P<status>.*)\)'
     for a_tag in a_tags:
         text_match = re.search(pattern_r, a_tag.text)
+        link = a_tag['href']
         if text_match:
-            link = a_tag['href']
             version = text_match.group(1)
             status = text_match.group(2)
-            result.append(
-                (link, version, status)
-            )
         else:
-            link = a_tag['href']
             version = a_tag.text
             status = ''
-            result.append(
-                (link, version, status)
-            )
+        result.append(
+            (link, version, status)
+        )
     for row in result:
         print(*row)
