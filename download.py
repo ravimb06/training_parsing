@@ -2,6 +2,9 @@ import requests_cache
 import re
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+from pathlib import Path
+
+BASE_DIR = Path(__file__).parent
 
 DOWNLOADS_URL = 'https://docs.python.org/3/download.html'
 
@@ -15,3 +18,7 @@ if __name__ == '__main__':
     pdf_a4_tag = table_tag.find('a', {'href': re.compile(r'.+pdf-a4\.zip$')})
     pdf_a4_link = pdf_a4_tag['href']
     archive_url = urljoin(DOWNLOADS_URL, pdf_a4_link)
+    filename = archive_url.split('/')[-1]
+    downloads_dir = BASE_DIR / 'downloads'
+    downloads_dir.mkdir(exist_ok=True)
+    archive_path = downloads_dir / filename
